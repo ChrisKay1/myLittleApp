@@ -1,12 +1,43 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 
 let defaultColor=  '#fff';
 let defaultStyle = {
 color: defaultColor
+}
+let fakeServerData = {
 
+  user: {
+
+    name: 'David',
+
+    playlist: [
+      {
+      name: 'favs2',
+      songs: ['hund','katze', 'maus']
+      },
+
+      {
+        name: 'favs3',
+        songs: ['hund','katze', 'maus']
+      },
+
+        {
+          name: 'favs4',
+          songs: ['hund','katze', 'maus']
+        },
+
+       {
+            name: 'favs5',
+            songs: ['hund','katze', 'maus']
+          } 
+
+        
+        ]
+
+          
+        }
 }
 
 class Aggregate extends Component {
@@ -20,7 +51,10 @@ render(){
     <div style={{width: '40%', display: 'inline-block'}}>
 
  
-  <h1 style={{...defaultStyle}}>Titel number</h1>
+  <h1 style={{...defaultStyle, color: 'white'}}>{this.props.playlist &&
+  
+                                                 this.props.playlist.length}Hallo</h1>
+                                                 console.log(this.props.playlist;)
 
 </div>
   )
@@ -74,15 +108,33 @@ class Playlist extends Component {
 
 
 class App extends Component {
+
+  constructor() {
+
+super()
+   this.state = {serverData: {}}
+  }
+
+  componentDidMount () {
+
+    this.setState({serverData: fakeServerData})
+
+  }
   render() {
     return (
       <div className="App">
-        <h1>Number Text</h1>
+        <h1 style={{color: 'white'}}>{this.state.serverData.user &&
+        this.state.serverData.user.name}'s playlist</h1>
 
-        <Aggregate/>
-<Aggregate/>
+        <Aggregate playlist = {this.state.serverData.user &&
+this.state.serverData.user.playlist}huhu/>
+<Aggregate playlist = {this.state.serverData.user &&
+this.state.serverData.user.playlist}huhu/>
 <Filter/>
-<Playlist/><Playlist/><Playlist/><Playlist/>
+<Playlist/>
+<Playlist/>
+<Playlist/>
+<Playlist/>
 
 
         
