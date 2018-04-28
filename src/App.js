@@ -15,57 +15,84 @@ let fakeServerData = {
     playlist: [
       {
       name: 'favs2',
-      songs: ['hund','katze', 'maus']
+      songs: [{name:' hund', duration: 1234}, {name: 'katze',duration: 26364}]
       },
 
       {
-        name: 'favs3',
-        songs: ['hund','katze', 'maus']
+      name: 'favs3',
+      songs: [{name:' hund', duration: 1234}, {name: 'katze',duration: 26364}]
       },
 
         {
-          name: 'favs4',
-          songs: ['hund','katze', 'maus']
+      name: 'favs4',
+      songs: [{name:' hund', duration: 1234}, {name: 'katze',duration: 26364}]
         },
 
        {
-            name: 'favs5',
-            songs: ['hund','katze', 'maus']
-          } 
-
-        
-        ]
-
-          
-        }
+      name: 'favs5',
+      songs: [{name:' hund', duration: 1234}, {name: 'katze',duration: 26364}]
+          }  
+        ] }
 }
 
-class Aggregate extends Component {
-
- 
+// first component
+class PlaylistCounter extends Component {
 
 render(){
 
   return (
 
-    <div style={{width: '40%', display: 'inline-block'}}>
+  <div style={{width: '40%', display: 'inline-block'}}>
 
  
-  <h1 style={{...defaultStyle, color: 'white'}}>{this.props.playlist &&
+  <h1 style={{...defaultStyle, color: 'white'}}>{
   
-                                                 this.props.playlist.length}Hallo</h1>
-                                                 console.log(this.props.playlist;)
+        this.props.playlist.length}Playlists</h1>
+                                                 
 
-</div>
+  </div>
   )
 
 }}
 
 
+// second component
+class HoursCounter extends Component {
+
+render(){
+
+ let allSongs = this.props.playlist.reduce((songs, eachPlaylist) => {
+
+ return songs.concat(eachPlaylist.songs)
+
+ }, [])
+
+    let totalDuration = allSongs.reduce((sum, eachSong) => {
+
+return sum + eachSong.duration
+
+
+    }, 0  )
+  
+ return (
+  
+  <div style={{width: '40%', display: 'inline-block'}}>
+  
+   
+  <h1 style={{...defaultStyle, color: 'white'}}>{Math.round(totalDuration/60)} hours</h1>
+                                                   
+  
+  </div>
+    )
+  
+  }}
+  
+  
+
+// third component
 class Filter extends Component {
 
   render(){
-
 
     return(
 
@@ -74,15 +101,14 @@ class Filter extends Component {
         <img/>
         <input type='text'/>
 
-
         </div>
-
-
 
      )
   }
 }
+  
 
+// fourth component
 class Playlist extends Component {
 
   render (){
@@ -106,7 +132,7 @@ class Playlist extends Component {
 
 
 
-
+// the app
 class App extends Component {
 
   constructor() {
@@ -117,18 +143,23 @@ super()
 
   componentDidMount () {
 
-    this.setState({serverData: fakeServerData})
+    setTimeout (() => {
 
-  }
+    this.setState({serverData: fakeServerData});}, 1000);
+    }
+  
   render() {
     return (
       <div className="App">
-        <h1 style={{color: 'white'}}>{this.state.serverData.user &&
-        this.state.serverData.user.name}'s playlist</h1>
+      {this.state.serverData.user ?
+      <div> 
+        <h1 style={{color: 'white'}}>
+        {this.state.serverData.user.name}'s playlist</h1>}
 
-        <Aggregate playlist = {this.state.serverData.user &&
+
+        <PlaylistCounter playlist = {this.state.serverData.user &&
 this.state.serverData.user.playlist}huhu/>
-<Aggregate playlist = {this.state.serverData.user &&
+<HoursCounter playlist = {this.state.serverData.user &&
 this.state.serverData.user.playlist}huhu/>
 <Filter/>
 <Playlist/>
@@ -136,8 +167,8 @@ this.state.serverData.user.playlist}huhu/>
 <Playlist/>
 <Playlist/>
 
-
-        
+      </div> : <h1>Loading...</h1>
+      }
       </div>
     );
   }
