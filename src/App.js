@@ -118,8 +118,20 @@ class Playlist extends Component {
 <div style={{...defaultStyle, width:'20%', display: 'inline-block'}}>
 
 <img/>
-<h3>Playlist Name</h3>
-<ul><li>Nummer1</li><li>Nummer2</li><li>Nummer3</li><li>Nummer4</li><li>Nummer4</li></ul>
+<h3>{this.props.playlist.name}</h3>
+<ul>
+
+  {this.props.playlist.songs.map( song => 
+  
+  
+  
+  <li>{song.name}</li>
+
+)}
+  
+  
+  
+  </ul>
 
 
 </div>
@@ -149,6 +161,20 @@ super()
     }
   
   render() {
+
+    let playlistElemets = []
+
+if(this.state.serverData.user) {
+   
+for (let i=0; i<this.state.serverData.user.playlist.length; i++){
+
+
+let playlist = this.state.serverData.user.playlist[i]
+  playlistElemets.push(<Playlist playlist={playlist}/>)
+
+
+}
+}
     return (
       <div className="App">
       {this.state.serverData.user ?
@@ -162,10 +188,8 @@ this.state.serverData.user.playlist}huhu/>
 <HoursCounter playlist = {this.state.serverData.user &&
 this.state.serverData.user.playlist}huhu/>
 <Filter/>
-<Playlist/>
-<Playlist/>
-<Playlist/>
-<Playlist/>
+{playlistElemets}
+
 
       </div> : <h1>Loading...</h1>
       }
