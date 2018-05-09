@@ -157,15 +157,23 @@ super()
 
     setTimeout (() => {
 
-    this.setState({serverData: fakeServerData});}, 1000);
-    }
+    this.setState({serverData: fakeServerData});
+  }, 1000);
+    
+
+    setTimeout (() => {
+
+      this.setState({filterString: 'weekly'});}, 2000);
+      }
+
+
+    
   
   render() {
 
     let playlistElemets = []
 
 if(this.state.serverData.user) {
-   
 for (let i=0; i<this.state.serverData.user.playlist.length; i++){
 
 
@@ -183,12 +191,23 @@ let playlist = this.state.serverData.user.playlist[i]
         {this.state.serverData.user.name}'s playlist</h1>}
 
 
-        <PlaylistCounter playlist = {this.state.serverData.user &&
-this.state.serverData.user.playlist}huhu/>
-<HoursCounter playlist = {this.state.serverData.user &&
-this.state.serverData.user.playlist}huhu/>
+<PlaylistCounter playlist = {this.state.serverData.user.playlist}huhu/>
+
+<HoursCounter playlist = {this.state.serverData.user.playlist}huhu/>
+
 <Filter/>
+
 {playlistElemets}
+
+
+{this.state.serverData.user.playlist.map(playlist =>
+
+<Playlist playlist={playlist}/>
+
+)}
+
+
+
 
 
       </div> : <h1>Loading...</h1>
